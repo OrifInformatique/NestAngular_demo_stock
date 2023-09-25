@@ -51,4 +51,5 @@ ng serve -c development
 # Production
 ng serve -c production
 ```
+- Additionally, add the images in `src/assets/uploads/`
 - Then navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
