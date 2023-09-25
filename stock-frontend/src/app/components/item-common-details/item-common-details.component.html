@@ -1,0 +1,100 @@
+<div *ngIf="itemCommon" class="container mb-3">
+    <!-- Button to return to the items list -->
+    <a (click)="navigationService.goToPreviousUrl()" class="btn btn-primary mb-2" role="button"><i class="bi bi-arrow-left-circle"></i>&nbsp;
+        Retour à la liste
+    </a>
+
+    <!-- Item_common informations -->
+    <div class="row">
+        <div class="mt-2 col-lg-3 col-md-4 col-sm-6">
+            <img id="picture" [src]="'/assets/uploads/images/' + (itemCommon.image || 'no_image.png')" (error)="handleMissingImage($event)" width="100%"
+                alt="Photo de l'objet" />
+        </div>
+        <div class="mt-2 col">
+            <div class="row">
+                <div class="col-12">
+                    <h3><span class="badge bg-primary">{{ itemCommon.item_group.entity.name }}</span>&nbsp;{{ itemCommon.name }}</h3>
+                    <p>
+                        {{ itemCommon.description }}
+                    </p>
+                </div>
+                <div class="col-md-6 col-md-4">
+                    Groupe&nbsp;:<br>
+                    {{ itemCommon.item_group.name }}
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    Type d'objet&nbsp;:<br>
+                    <span *ngFor="let item_tag_link of itemCommon?.item_tag_links" class="badge bg-dark me-1 mb-1">
+                        {{ item_tag_link.item_tag.name }}
+                    </span>
+                </div>
+                <div class="col-12 mt-2">
+                    <!-- Button to display linked file -->
+                    <a *ngIf="itemCommon?.linked_file != null" href="{{ itemCommon.linked_file }}"
+                        class="btn btn-secondary" role="button">
+                        Voir le fichier joint
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Related items informations -->
+<div *ngIf="itemCommon?.items" class="container mb-3">
+    <div *ngFor="let item of itemCommon?.items" class="row border bg-light rounded mb-2">
+        <!-- Item details -->
+        <div class="col-lg-6">
+            <h4>
+                {{ item.inventory_prefix + '.' + item.item_id.toString().padStart(4, '0') }}
+            </h4>
+
+            <!-- Item condition -->
+            <span [ngClass]="(item.item_condition | itemCondition)?.htmlClass" [innerHTML]="(item.item_condition | itemCondition)?.value"></span>
+            <!-- Loan status -->
+            <span [ngClass]="[(item.current_loan | loanStatus)?.htmlClass, 'ms-1']" [innerHTML]="(item.current_loan | loanStatus)?.value"></span>
+            <!-- Remarks -->
+            <p *ngIf="item.remarks" class="alert alert-info mt-2" role="alert">
+                {{ item.remarks }}
+            </p>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <!-- Stocking place -->
+            <p>
+                Lieu de stockage&nbsp;:<br>
+                {{ item.stocking_place.name }}
+            </p>
+            <!-- Serial number -->
+            <p>
+                Numéro de série&nbsp;:<br>
+                {{ item.serial_number ?? '-' }}
+            </p>
+            <!-- Supplier -->
+            <p>
+                Fournisseur&nbsp;:<br>
+                {{ item.supplier.name }}<br *ngIf="item.supplier_ref !== ''">
+                {{ item.supplier_ref !== '' ? 'Réf. ' + item.supplier_ref : '' }}
+            </p>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <!-- Buying Price -->
+            <p>
+                Prix d'achat&nbsp;:<br>
+                {{ item.buying_price ?? '-' }}
+            </p>
+            <!-- Buying Date -->
+            <p>
+                Date d'achat&nbsp;:<br>
+                {{ item.buying_date | customDate }}
+            </p>
+            <!-- Warranty -->
+            <p [innerHTML]="item | warrantyStatus"></p>
+        </div>
+    </div>
+    <!-- No item to display -->
+    <div *ngIf="!itemCommon?.items" class="row border-top">
+        <div class="alert alert-info">
+            Aucun objet n'est lié à cet objet commun
+        </div>
+    </div>
+</div>

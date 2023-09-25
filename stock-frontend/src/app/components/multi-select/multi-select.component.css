@@ -1,0 +1,5 @@
+.dropdown-menu.dropdown-menu-wide {
+  width: 100%;
+  min-width: auto; /* Optionally, if you don't want a minimum width */
+  padding: 10px; /* Optionally, if you want to remove padding */
+}

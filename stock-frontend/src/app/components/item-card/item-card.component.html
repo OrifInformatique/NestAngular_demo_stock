@@ -1,0 +1,19 @@
+<div *ngIf="item" class="bg-light rounded item">
+    <div class="item_picture">
+        <a routerLink="/item-common/view/{{ item.item_common.item_common_id }}">
+            <img [src]="'/assets/uploads/images/' + (item.item_common.image || 'no_image.png')" (error)="handleMissingImage($event)" alt="">
+        </a>
+    </div>
+    <div><a class="text-decoration-none" routerLink="/item-common/view/{{ item.item_common.item_common_id }}">{{ item.inventory_prefix + '.' + item.item_id.toString().padStart(4, '0') }}</a></div>
+    <div><a class="text-decoration-none" routerLink="/item-common/view/{{ item.item_common.item_common_id }}">{{ item.item_common.name }}</a></div>
+    <div class="small">{{ item.serial_number }}</div>
+    <div class="small">{{ item.item_common.description }}</div>
+    <div class="small">{{ item.stocking_place.name }}</div>
+    <div class="mt-2">
+        <span [ngClass]="(item.item_condition | itemCondition).htmlClass" [innerHTML]="(item.item_condition | itemCondition).value"></span>
+        <span [ngClass]="[(item.current_loan | loanStatus)?.htmlClass, 'ms-1']" [innerHTML]="(item.current_loan | loanStatus)?.value"></span>
+        <div class="small" *ngIf="item.current_loan !== null">
+            {{ item.current_loan.item_localisation }} <br> Retour prévu : {{ item.current_loan.planned_return_date !== null ? (item.current_loan.planned_return_date | customDate) : 'aucun' }}
+        </div>
+    </div>
+</div>

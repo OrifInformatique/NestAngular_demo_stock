@@ -1,0 +1,8 @@
+<div class="container">
+    <app-item-filters (filtersChanged)="updateQueryParams($event)"></app-item-filters>
+    <app-pagination-buttons [currentPage]="currentPage" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+        (pageChange)="pageChanged($event)"></app-pagination-buttons>
+    <app-items-list [items]="items"></app-items-list>
+    <app-pagination-buttons [currentPage]="currentPage" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+        (pageChange)="pageChanged($event)"></app-pagination-buttons>
+</div>

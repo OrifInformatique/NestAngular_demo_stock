@@ -1,0 +1,3 @@
+<div *ngIf="!isProduction" class="alert alert-warning text-center">Environment is set to '{{ isProduction ? 'production' : 'development' }}'.</div>
+<app-login-bar></app-login-bar>
+<router-outlet></router-outlet>

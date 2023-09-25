@@ -1,0 +1,62 @@
+<div class="row pb-3">
+    <!-- Entity -->
+    <div class="col-sm-12">
+        <label class="mb-2" for="e">Nom du site</label>
+        <select [(ngModel)]="selectedEntity" #entitySelect (change)="onSelectChange($event, entitySelect.id)" id="e" name="e" class="form-select" aria-label="Select entity">
+            <option *ngFor="let entity of entities" value="{{ entity.id }}">{{ entity.name }}</option>
+        </select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-8">
+        <p class="bg-light rounded">Filtres de recherche</p>
+        <div class="row">
+            <!-- Text search -->
+            <div class="col-sm-12 mb-2">
+                <div class="form-group">
+                    <label class="form-label" for="ts">Nom, description, No d'inventaire, No de série</label>
+                    <input [(ngModel)]="textSearchValue" #textSearch type="text" id="ts" name="ts" class="form-control" placeholder="Aucun filtre" (change)="onSelectChange($event, textSearch.id)">
+                </div>
+            </div>
+            <!-- Item tags -->
+            <div class="col-sm-8 mb-2">
+                <label class="form-label" for="t[]">Type d'objet</label>
+                <app-multi-select [id]="'t[]'" [options]="itemTags" (filtersChanged)="onMultiSelectChange($event)"></app-multi-select>
+            </div>
+            <!-- Item groups -->
+            <div class="col-sm-4 mb-2">
+                <label class="form-label" for="g[]">Groupe</label>
+                <app-multi-select [id]="'g[]'" [options]="itemGroups" (filtersChanged)="onMultiSelectChange($event)"></app-multi-select>
+            </div>
+            <!-- Stocking places-->
+            <div class="col-sm-8">
+                <label class="form-label" for="s[]">Lieu de stockage</label>
+                <app-multi-select [id]="'s[]'" [options]="stockingPlaces" (filtersChanged)="onMultiSelectChange($event)"></app-multi-select>
+            </div>
+            <!-- Item conditions -->
+            <div class="col-sm-4">
+                <label class="form-label" for="c[]">État de l'objet</label>
+                <app-multi-select [id]="'c[]'" [options]="itemConditions" (filtersChanged)="onMultiSelectChange($event)"></app-multi-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <p class="bg-light rounded">Ordre de tri</p>
+        <!-- Order By (value) -->
+        <div class="col-sm-12 mb-2">
+            <label class="mb-2" for="o">Trier par</label>
+            <select [(ngModel)]="selectedOrderBy" #orderBySelect (change)="onSelectChange($event, orderBySelect.id)" id="o" name="o" class="form-select" aria-label="Order by">
+                <option *ngFor="let orderByField of orderByFields" value="{{ orderByField.id }}">{{ orderByField.name }}</option>
+            </select>
+        </div>
+        <!-- Order By (Asc, Desc) -->
+        <div class="col-sm-12">
+            <label class="mb-2" for="ad">Ordre de tri</label>
+            <select [(ngModel)]="selectedAscDesc" #AscDescSelect (change)="onSelectChange($event, AscDescSelect.id)" id="ad" name="ad" class="form-select" aria-label="Order by (Asc, Desc)">
+                <option *ngFor="let order of orders" value="{{ order.id }}">{{ order.name }}</option>
+            </select>
+        </div>
+    </div>
+</div>

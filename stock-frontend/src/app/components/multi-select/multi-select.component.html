@@ -1,0 +1,14 @@
+<div class="dropdown">
+    <button class="form-control form-select" type="button" id="multiSelectDropdown" data-bs-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        {{ selectedOptions.length > 0 ? (selectedOptions.length == 1 ? selectedOptions.length + ' sélectionné':
+        selectedOptions.length + ' sélectionnés') : 'Aucun filtre' }}
+    </button>
+    <div class="dropdown-menu dropdown-menu-wide" aria-labelledby="multiSelectDropdown" (click)="preventDropdownClose($event)">
+        <div class="form-check" *ngFor="let option of options">
+            <input class="form-check-input" type="checkbox" (change)="toggleSelection(option.id, id)"
+                [checked]="selectedOptions.includes(option.id)" id="{{ 'option-' + option.uniqueId }}" />
+            <label class="form-check-label ps-2" for="{{ 'option-' + option.uniqueId }}">{{ option.name }}</label>
+        </div>
+    </div>
+</div>
